@@ -30,6 +30,16 @@ class Vaca(pilas.actores.Actor):
         elif self.y < -210:
             self.y = -210
 
+class Enemigo(pilas.actores.Bomba):
+
+    def __init__(self):
+        pilas.actores.Bomba.__init__(self)
+        self.izquierda = 320
+        self.y = random.randint(-210, 210)
+
+    def actualizar(self):
+        self.x -= 5
+
 class Item(pilas.actores.Actor):
 
     def __init__(self):
@@ -80,6 +90,7 @@ fondo = pilas.fondos.Fondo('data/nubes.png')
 puntos = pilas.actores.Puntaje(x=-290, y=210)
 vaca = Vaca()
 items = []
+enemigos = []
 
 def crear_item():
     un_item = Item()
@@ -100,6 +111,14 @@ def cuanto_toca_item(v, i):
     puntos.rotacion = [0], 0.2
 
 pilas.mundo.colisiones.agregar(vaca, items, cuanto_toca_item)
+
+
+def crear_enemigo():
+    un_enemigo = Enemigo()
+    enemigos.append(un_enemigo)
+    return True
+
+pilas.mundo.agregar_tarea(3.3, crear_enemigo)
 
 
 Nube()
