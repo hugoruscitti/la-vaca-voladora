@@ -7,10 +7,18 @@
 
 import pilas
 
+class Vaca(pilas.actores.Actor):
+
+    def __init__(self):
+        pilas.actores.Actor.__init__(self)
+        self.imagen = 'data/vaca_volando.png'
+        self.centro = (140, 59)
+        self.radio_de_colision = 40
+
+
 pilas.iniciar()
 
 fondo = pilas.fondos.Fondo('data/nubes.png')
-pelota = pilas.actores.Pelota()
-
+vaca = Vaca()
 
 pilas.ejecutar()
