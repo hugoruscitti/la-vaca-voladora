@@ -121,6 +121,15 @@ def crear_enemigo():
 pilas.mundo.agregar_tarea(3.3, crear_enemigo)
 
 
+def cuanto_toca_enemigo(vaca, enemigo):
+    enemigo.eliminar()
+
+
+pilas.mundo.colisiones.agregar(vaca, enemigos, cuanto_toca_enemigo)
+
+
+
+
 Nube()
 Nube()
 Nube()
