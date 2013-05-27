@@ -45,6 +45,35 @@ class Item(pilas.actores.Actor):
             self.eliminar()
 
 
+class Nube(pilas.actores.Actor):
+
+    def __init__(self):
+        pilas.actores.Actor.__init__(self)
+        velocidad = random.randint(2, 10)
+        self.velocidad = velocidad
+        self.escala = velocidad / 10.0
+        self.transparencia = velocidad * 6
+        self.z = - (velocidad -5)
+        self.x = random.randint(-320, 320)
+        self.y = random.randint(-210, 210)
+
+        rutas_imagenes_nubes = [
+                'data/nube1.png',
+                'data/nube2.png',
+        ]
+        self.imagen = random.choice(rutas_imagenes_nubes)
+
+    def actualizar(self):
+        self.x -= self.velocidad
+
+        if self.derecha < -320:
+            self.reiniciar_posicion()
+
+    def reiniciar_posicion(self):
+        self.izquierda = 320
+        self.y = random.randint(-210, 210)
+
+
 pilas.iniciar()
 
 fondo = pilas.fondos.Fondo('data/nubes.png')
@@ -72,5 +101,13 @@ def cuanto_toca_item(v, i):
 
 pilas.mundo.colisiones.agregar(vaca, items, cuanto_toca_item)
 
+
+Nube()
+Nube()
+Nube()
+Nube()
+Nube()
+Nube()
+Nube()
 
 pilas.ejecutar()
