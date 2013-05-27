@@ -48,6 +48,7 @@ class Item(pilas.actores.Actor):
 pilas.iniciar()
 
 fondo = pilas.fondos.Fondo('data/nubes.png')
+puntos = pilas.actores.Puntaje(x=-290, y=210)
 vaca = Vaca()
 items = []
 
@@ -57,5 +58,19 @@ def crear_item():
     return True
 
 pilas.mundo.agregar_tarea(2, crear_item)
+
+
+
+
+def cuanto_toca_item(v, i):
+    i.eliminar()
+    puntos.aumentar(10)
+    puntos.escala = 2
+    puntos.escala = [1], 0.2
+    puntos.rotacion = random.randint(30, 60)
+    puntos.rotacion = [0], 0.2
+
+pilas.mundo.colisiones.agregar(vaca, items, cuanto_toca_item)
+
 
 pilas.ejecutar()
