@@ -5,6 +5,7 @@
 #
 #           python test.py
 
+import random
 import pilas
 
 class Vaca(pilas.actores.Actor):
@@ -29,10 +30,25 @@ class Vaca(pilas.actores.Actor):
         elif self.y < -210:
             self.y = -210
 
+class Item(pilas.actores.Actor):
+
+    def __init__(self):
+        pilas.actores.Actor.__init__(self, 'estrella.png')
+        self.escala = 0.5
+        self.izquierda = 320
+        self.y = random.randint(-210, 210)
+
+    def actualizar(self):
+        self.izquierda -= 5
+
+        if self.derecha < -320:
+            self.eliminar()
+
 
 pilas.iniciar()
 
 fondo = pilas.fondos.Fondo('data/nubes.png')
 vaca = Vaca()
+Item()
 
 pilas.ejecutar()
