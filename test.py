@@ -23,6 +23,7 @@ class Estado:
 class Ingresando(Estado):
 
     def iniciar(self):
+        self.vaca.definir_animacion([3, 4])
         self.contador = 0
         self.vaca.x = -380
         self.vaca.x = [-170], 0.5
@@ -36,7 +37,7 @@ class Ingresando(Estado):
 class Volando(Estado):
 
     def iniciar(self):
-        self.contador = 0
+        self.vaca.definir_animacion([3, 4])
 
     def actualizar(self):
         velocidad = 5
@@ -51,29 +52,18 @@ class Volando(Estado):
         elif self.vaca.y < -210:
             self.vaca.y = -210
 
-        self.contador += 0.2
-
-        if (self.contador % 2) < 1:
-            self.vaca.imagen.definir_cuadro(3)
-        else:
-            self.vaca.imagen.definir_cuadro(4)
-
 
 class Perdiendo(Estado):
 
     def iniciar(self):
-        self.vaca.imagen.definir_cuadro(0)
+        self.vaca.definir_animacion([0])
         self.vaca.centro = ('centro', 'centro')
-        pass
 
     def actualizar(self):
         self.vaca.rotacion += 7
         self.vaca.escala += 0.01
         self.vaca.x += 1
         self.vaca.y -= 1
-        pass
-
-
 
 
 class Vaca(pilas.actores.Actor):
@@ -81,15 +71,34 @@ class Vaca(pilas.actores.Actor):
     def __init__(self):
         pilas.actores.Actor.__init__(self)
         grilla = pilas.imagenes.cargar_grilla('data/sprites.png', 5, 1)
-        grilla.definir_cuadro(3)
         self.imagen = grilla
+        self.definir_animacion([0])
         self.centro = (140, 59)
         self.radio_de_colision = 40
         self.x = -170
         self.estado = Ingresando(self)
+        self.contador = 0
+
+    def definir_animacion(self, cuadros):
+        self.paso = 0
+        self.contador = 0
+        self.cuadros = cuadros
 
     def actualizar(self):
         self.estado.actualizar()
+        self.actualizar_animacion()
+
+    def actualizar_animacion(self):
+        self.contador += 0.2
+
+        if (self.contador > 1):
+            self.contador = 0
+            self.paso += 1
+
+            if self.paso >= len(self.cuadros):
+                self.paso = 0
+
+        self.imagen.definir_cuadro(self.cuadros[self.paso])
 
     def perder(self):
         self.estado = Perdiendo(self)
@@ -197,14 +206,7 @@ def cuanto_toca_enemigo(vaca, enemigo):
 pilas.mundo.colisiones.agregar(vaca, enemigos, cuanto_toca_enemigo)
 
 
-
-
-Nube()
-Nube()
-Nube()
-Nube()
-Nube()
-Nube()
-Nube()
+for x in range(7):
+    Nube()
 
 pilas.ejecutar()
