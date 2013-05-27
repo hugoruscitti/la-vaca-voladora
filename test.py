@@ -49,6 +49,13 @@ pilas.iniciar()
 
 fondo = pilas.fondos.Fondo('data/nubes.png')
 vaca = Vaca()
-Item()
+items = []
+
+def crear_item():
+    un_item = Item()
+    items.append(un_item)
+    return True
+
+pilas.mundo.agregar_tarea(2, crear_item)
 
 pilas.ejecutar()
