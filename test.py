@@ -60,7 +60,7 @@ class Jugador(pilas.actores.Actor):
 class Ingresando(Estado):
 
     def iniciar(self):
-        self.vaca.definir_animacion([3, 4])
+        self.vaca.definir_animacion([3, 4, 5, 6, 7, 8, 9, 10])
         self.contador = 0
         self.vaca.x = -380
         self.vaca.x = [-170], 0.5
@@ -74,7 +74,7 @@ class Ingresando(Estado):
 class Volando(Estado):
 
     def iniciar(self):
-        self.vaca.definir_animacion([3, 4])
+        self.vaca.definir_animacion([3, 4, 5, 6, 7, 8, 9, 10])
         self.contador = 0
         self.esta_riendo = False
 
@@ -103,11 +103,11 @@ class Volando(Estado):
         if not self.esta_riendo:
             if self.vaca.contador_sonreir == 40:
                 self.esta_riendo = True
-                self.vaca.definir_animacion([1, 2])
+                self.vaca.definir_animacion([0])
         else:
             if self.vaca.contador_sonreir == 0:
                 self.esta_riendo = False
-                self.vaca.definir_animacion([3, 4])
+                self.vaca.definir_animacion([3, 4, 5, 6, 7, 8, 9, 10])
 
         self.actualizar_movimiento_vuelo()
 
@@ -120,7 +120,7 @@ class Volando(Estado):
 class Perdiendo(Estado):
 
     def iniciar(self):
-        self.vaca.definir_animacion([0])
+        self.vaca.definir_animacion([1])
         self.vaca.centro = ('centro', 'centro')
         self.contador = 0
 
@@ -136,7 +136,7 @@ class Vaca(pilas.actores.Actor):
 
     def __init__(self):
         pilas.actores.Actor.__init__(self)
-        grilla = pilas.imagenes.cargar_grilla('data/sprites.png', 5, 1)
+        grilla = pilas.imagenes.cargar_grilla('data/sprites.png', 11, 1)
         self.imagen = grilla
         self.definir_animacion([0])
         self.centro = (140, 59)
